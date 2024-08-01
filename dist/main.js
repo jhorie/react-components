@@ -27,25 +27,23 @@ function d() {
   return Object.keys(t.uuids).length > 0;
 }
 function h() {
-  return d() ? /* @__PURE__ */ u.createElement(
+  return d() ? u.createElement(
     b,
-    {
-      sx: {
-        display: "flex",
-        backgroundColor: "rgba(0,0,0,0.4)",
-        alignItems: "center",
-        alignContent: "center",
-        justifyItems: "center",
-        justifyContent: "center",
-        position: "fixed",
-        height: "100vh",
-        width: "100vw",
-        zIndex: 15e3,
-        left: 0,
-        top: 0
-      }
-    },
-    /* @__PURE__ */ u.createElement(m, { color: "primary", thickness: 6, size: 50 })
+    { sx: {
+      display: "flex",
+      backgroundColor: "rgba(0,0,0,0.4)",
+      alignItems: "center",
+      alignContent: "center",
+      justifyItems: "center",
+      justifyContent: "center",
+      position: "fixed",
+      height: "100vh",
+      width: "100vw",
+      zIndex: 15e3,
+      left: 0,
+      top: 0
+    } },
+    u.createElement(m, { color: "primary", thickness: 6, size: 50 })
   ) : null;
 }
 function I() {

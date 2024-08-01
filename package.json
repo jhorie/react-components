@@ -15,9 +15,9 @@
       "default": "./src/BlockUserInput/useIsUserInputBlocked.ts"
     },
     "#*": [
-      "./*",
-      "./*.ts",
-      "./*.tsx"
+      "./src/*",
+      "./src/*.ts",
+      "./src/*.tsx"
     ]
   },
   "main": "dist/main.umd.cjs",
@@ -40,7 +40,6 @@
     "@emotion/react": ">=11.0.0",
     "@emotion/styled": ">=11.0.0",
     "@mui/material": ">=5.0.0",
-    "@reduxjs/toolkit": ">=2.2.6",
     "react": ">=18",
     "react-dom": ">=18",
     "uuid": "^10"
@@ -67,8 +66,5 @@
     "typescript": "^5.5.4",
     "uuid": "^10",
     "vite": "^5.3.5"
-  },
-  "dependencies": {
-    "@reduxjs/toolkit": "^2.2.6"
   }
 }
