@@ -3,7 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "exports": {
-
+    "./package.json": "./package.json",
+    "./src": "./src",
     ".": {
       "import": "./dist/main.js",
       "require": "./dist/main.cjs",
