@@ -71,7 +71,7 @@ function E(t) {
   const { startLoading: e, stopLoading: s } = p();
   return async (...o) => {
     e();
-    const f = await t(o);
+    const f = await t(...o);
     return s(), f;
   };
 }

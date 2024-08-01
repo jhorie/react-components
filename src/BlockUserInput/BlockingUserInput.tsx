@@ -66,26 +66,17 @@ export function useBlockUserInput<T>(isLoading?: boolean) {
   };
 }
 
-// export function useWrapPromise(fn: (...args: any[]) => Promise<unknown>) {
-//     const { startLoading, stopLoading } = useBlockUserInput();
-//
-//     return (...rest: Parameters<(...args: any[]) => Promise<unknown>>) => {
-//         startLoading();
-//         setTimeout(() => {
-//             fn(...rest).finally(stopLoading);
-//         }, 3000);
-//     };
-// }
 
-// export function useWrapPromise<T extends MutationTrigger<MutationDefinition<any, any, any, any>>>(fn: T) {
-export function useWrapPromise<T extends (rest: Parameters<T>) => Promise<MutationActionCreatorResult<any>>>(fn: T) {
-  const { startLoading, stopLoading } = useBlockUserInput();
+type AsyncFunction<T extends any[], R> = (...args: T) => Promise<R>;
 
-  return async (...rest: Parameters<T>) => {
-    startLoading();
+export function useWrapPromise<T extends any[], R>(fn: AsyncFunction<T, R>): AsyncFunction<T, R> {
+    const { startLoading, stopLoading } = useBlockUserInput();
 
-    const result = await fn(rest);
-    stopLoading();
-    return result;
-  };
+    return async (...args: T) => {
+        startLoading();
+
+        const result = await fn(...args);
+        stopLoading();
+        return result;
+    };
 }
