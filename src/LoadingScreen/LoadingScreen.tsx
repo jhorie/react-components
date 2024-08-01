@@ -1,11 +1,38 @@
-import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
+import { Box, CircularProgress, SxProps } from "@mui/material";
+import { useIsLoading } from "#LoadingScreen/useIsLoading";
+import React, { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
+import { loadingEntities, loadingEntitiesStore } from "~/LoadingScreen/loadingScreenStore";
 import { v4 as uuidv4 } from "uuid";
-import { loadingEntities, loadingEntitiesStore } from "./loadingScreenStore";
 
-export function useIsLoading() {
-  const loadingEntities = useSyncExternalStore(loadingEntitiesStore.subscribe, loadingEntitiesStore.getSnapshot);
+const fullScreenStyles: SxProps = {
+  position: "fixed",
+  height: "100vh",
+  width: "100vw",
+  zIndex: 15000,
+  left: 0,
+  top: 0,
+};
 
-  return Object.keys(loadingEntities.uuids).length > 0;
+export function LoadingScreen({ isFullScreen = true }: { isFullScreen: boolean }) {
+  const isLoadingFromHook = useIsLoading();
+
+  return isLoadingFromHook ? (
+    <Box
+      sx={{
+        display: "flex",
+        backgroundColor: "rgba(0,0,0,0.4)",
+        alignItems: "center",
+        alignContent: "center",
+        justifyItems: "center",
+        justifyContent: "center",
+        width: 1,
+        height: 1,
+        ...(isFullScreen ? fullScreenStyles : {}),
+      }}
+    >
+      <CircularProgress color={"primary"} thickness={6} size={50} />
+    </Box>
+  ) : null;
 }
 
 export function isLoading() {

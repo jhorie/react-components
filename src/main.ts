@@ -1,2 +1,2 @@
-export { isLoading, useIsLoading, useLoadingScreen } from "./LoadingScreen/loadingScreen";
-export { LoadingScreenFullScreen } from "./LoadingScreen/LoadingScreenFullScreen";
+export { useIsLoading } from "./LoadingScreen/useIsLoading";
+export { LoadingScreen,useLoadingScreen,isLoading } from "./LoadingScreen/LoadingScreen";
