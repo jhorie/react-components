@@ -1,4 +1,15 @@
-import { useIsLoading } from "./LoadingScreen/useIsLoading";
-import { LoadingScreen as LoadingScreenComponent, useLoadingScreen, isLoading } from "./LoadingScreen/LoadingScreen";
+import { useIsUserInputBlocked } from "./BlockUserInput/useIsUserInputBlocked";
+import {
+  BlockingUserInput,
+  useBlockUserInput,
+  isUserInputBlocked,
+  useWrapPromise,
+} from "./BlockUserInput/BlockingUserInput";
 
-export const LoadingScreen = { useIsLoading, isLoading, useLoadingScreen, Component: LoadingScreenComponent };
+export const BlockUserInput = {
+  useIsUserInputBlocked,
+  isUserInputBlocked,
+  useBlockUserInput,
+  useWrapPromise,
+  View: BlockingUserInput,
+};

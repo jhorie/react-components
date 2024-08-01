@@ -10,9 +10,9 @@
     }
   },
   "imports": {
-    "#LoadingScreen/useIsLoading": {
-      "storybook": "./src/LoadingScreen/useIsLoading.mock.ts",
-      "default": "./src/LoadingScreen/useIsLoading.ts"
+    "#BlockUserInput/useIsUserInputBlocked": {
+      "storybook": "./src/BlockUserInput/useIsUserInputBlocked.mock.ts",
+      "default": "./src/BlockUserInput/useIsUserInputBlocked.ts"
     },
     "#*": [
       "./*",
@@ -27,7 +27,7 @@
   "files": [
     "dist"
   ],
-  "type": "module",
+
   "scripts": {
     "build": "tsc && vite build",
     "build:watch": "tsc && vite build --watch",
@@ -40,12 +40,14 @@
     "@emotion/react": ">=11.0.0",
     "@emotion/styled": ">=11.0.0",
     "@mui/material": ">=5.0.0",
+    "@reduxjs/toolkit": ">=2.2.6",
     "react": ">=18",
     "react-dom": ">=18",
     "uuid": "^10"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.6.1",
+
     "@rollup/plugin-typescript": "^11.1.6",
     "@storybook/addon-essentials": "^8.2.7",
     "@storybook/addon-interactions": "^8.2.7",
@@ -66,5 +68,8 @@
     "typescript": "^5.5.4",
     "uuid": "^10",
     "vite": "^5.3.5"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.2.6"
   }
 }

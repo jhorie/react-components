@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 import typescript from "@rollup/plugin-typescript";
 import path from "path";
 import { typescriptPaths } from "rollup-plugin-typescript-paths";
-
+import {peerDependencies} from "./package.json"
 export default defineConfig({
   plugins: [],
   resolve: {
@@ -28,7 +28,7 @@ export default defineConfig({
       // formats: ["es", "cjs"],
     },
     rollupOptions: {
-      external: ["react", "react-dom", "@emotion/styled", "@emotion/react", "@mui/material"],
+      external: [...Object.keys(peerDependencies)],
       plugins: [
         typescriptPaths({
           preserveExtensions: true,
