@@ -11,6 +11,7 @@
     }
   },
   "main": "./dist/main.cjs",
+  "source": "./src/main.ts",
   "module": "./dist/main.js",
   "typings": "./dist/main.d.ts",
   "files": [
