@@ -10,10 +10,12 @@ let listeners: any[] = [];
 export const loadingEntitiesStore = {
   loadingStarted: (uuid: string) => {
     loadingEntities.uuids[uuid] = true;
+    loadingEntities = { ...loadingEntities };
     emitChange();
   },
   loadingStopped: (uuid: string) => {
     delete loadingEntities.uuids[uuid];
+    loadingEntities = { ...loadingEntities };
     emitChange();
   },
   subscribe(listener: any) {

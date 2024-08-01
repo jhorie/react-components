@@ -27,7 +27,7 @@ export default defineConfig({
             formats: ["es", "cjs"],
         },
         rollupOptions: {
-            external: [],
+            external: ['react','react-dom','@emotion/styled','@emotion/react','@mui/material'],
             plugins: [
                 typescriptPaths({
                     preserveExtensions: true,

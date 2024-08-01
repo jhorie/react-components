@@ -1,10 +1,10 @@
-import {CircularProgress, TextField} from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { useIsLoading } from "./loadingScreen";
 import React from "react";
 
 export function LoadingScreenFullScreen() {
-  // const isLoading = useIsLoading();
-const isLoading = true;
+  const isLoading = useIsLoading();
+
   return isLoading ? (
     <div
       style={{
@@ -22,8 +22,7 @@ const isLoading = true;
         justifyContent: "center",
       }}
     >
-        <TextField name={"TEST"}/>
-      {/*<CircularProgress color={"primary"} thickness={6} size={50} />*/}
+      <CircularProgress color={"primary"} thickness={6} size={50} />
     </div>
   ) : null;
 }

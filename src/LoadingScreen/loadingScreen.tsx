@@ -3,10 +3,9 @@ import { v4 as uuidv4 } from "uuid";
 import { loadingEntities, loadingEntitiesStore } from "./loadingScreenStore";
 
 export function useIsLoading() {
-  return true;
-  // const loadingEntities = useSyncExternalStore(loadingEntitiesStore.subscribe, loadingEntitiesStore.getSnapshot);
-  //
-  // return Object.keys(loadingEntities.uuids).length > 0;
+  const loadingEntities = useSyncExternalStore(loadingEntitiesStore.subscribe, loadingEntitiesStore.getSnapshot);
+
+  return Object.keys(loadingEntities.uuids).length > 0;
 }
 
 export function isLoading() {
@@ -17,10 +16,7 @@ export function isLoading() {
 
 export function useLoadingScreen<T>(isLoading?: boolean) {
   const uuid = useRef<string>("");
-  const loadingEntities = useSyncExternalStore(
-    loadingEntitiesStore.subscribe,
-    loadingEntitiesStore.getSnapshot
-  );
+  const loadingEntities = useSyncExternalStore(loadingEntitiesStore.subscribe, loadingEntitiesStore.getSnapshot);
   const isLoadingInStore = loadingEntities.uuids[uuid.current];
   useEffect(() => {
     uuid.current = uuidv4();
