@@ -35,6 +35,24 @@ export function isUserInputBlocked() {
   return Object.keys(uuids).length > 0;
 }
 
+/**
+ * @deprecated
+ * Do not use this function, you should use the hook useBlockUserInput
+ * @param uuid
+ */
+export function blockingStarted(uuid: string) {
+  blockingEntitiesStore.blockingStarted(uuid);
+}
+
+/**
+ * @deprecated
+ * Do not use this function, you should use the hook useBlockUserInput
+ * @param uuid
+ */
+export function blockingStopped(uuid: string) {
+  blockingEntitiesStore.blockingStopped(uuid);
+}
+
 export function useBlockUserInput<T>(isLoading?: boolean) {
   const uuid = useRef<string>("");
   const blockingEntities = useSyncExternalStore(blockingEntitiesStore.subscribe, blockingEntitiesStore.getSnapshot);
@@ -65,17 +83,16 @@ export function useBlockUserInput<T>(isLoading?: boolean) {
   };
 }
 
-
 type AsyncFunction<T extends any[], R> = (...args: T) => Promise<R>;
 
 export function useWrapPromise<T extends any[], R>(fn: AsyncFunction<T, R>): AsyncFunction<T, R> {
-    const { startLoading, stopLoading } = useBlockUserInput();
+  const { startLoading, stopLoading } = useBlockUserInput();
 
-    return async (...args: T) => {
-        startLoading();
+  return async (...args: T) => {
+    startLoading();
 
-        const result = await fn(...args);
-        stopLoading();
-        return result;
-    };
+    const result = await fn(...args);
+    stopLoading();
+    return result;
+  };
 }

@@ -4,6 +4,8 @@ import {
   useBlockUserInput,
   isUserInputBlocked,
   useWrapPromise,
+  blockingStarted,
+  blockingStopped,
 } from "./BlockUserInput/BlockingUserInput";
 
 export const BlockUserInput = {
@@ -11,5 +13,7 @@ export const BlockUserInput = {
   isUserInputBlocked,
   useBlockUserInput,
   useWrapPromise,
+  blockingStarted,
+  blockingStopped,
   View: BlockingUserInput,
 };
