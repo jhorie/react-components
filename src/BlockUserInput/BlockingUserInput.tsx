@@ -1,4 +1,4 @@
-import { Box, CircularProgress, SxProps } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useIsUserInputBlocked } from "#BlockUserInput/useIsUserInputBlocked";
 import React, { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 import { blockingEntities, blockingEntitiesStore } from "./blockingEntitiesStore";
@@ -74,10 +74,10 @@ export function useBlockUserInput<T>(isLoading?: boolean) {
   }, [isLoading, isLoadingInStore]);
 
   return {
-    startLoading: useCallback(() => {
+      blockingStarted: useCallback(() => {
       blockingEntitiesStore.blockingStarted(uuid.current);
     }, []),
-    stopLoading: useCallback(() => {
+      blockingStopped: useCallback(() => {
       blockingEntitiesStore.blockingStopped(uuid.current);
     }, []),
   };
@@ -86,13 +86,13 @@ export function useBlockUserInput<T>(isLoading?: boolean) {
 type AsyncFunction<T extends any[], R> = (...args: T) => Promise<R>;
 
 export function useWrapPromise<T extends any[], R>(fn: AsyncFunction<T, R>): AsyncFunction<T, R> {
-  const { startLoading, stopLoading } = useBlockUserInput();
+  const { blockingStarted, blockingStopped } = useBlockUserInput();
 
   return async (...args: T) => {
-    startLoading();
+    blockingStarted();
 
     const result = await fn(...args);
-    stopLoading();
+    blockingStopped();
     return result;
   };
 }

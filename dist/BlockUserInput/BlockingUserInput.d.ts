@@ -14,8 +14,8 @@ export declare function blockingStarted(uuid: string): void;
  */
 export declare function blockingStopped(uuid: string): void;
 export declare function useBlockUserInput<T>(isLoading?: boolean): {
-    startLoading: () => void;
-    stopLoading: () => void;
+    blockingStarted: () => void;
+    blockingStopped: () => void;
 };
 type AsyncFunction<T extends any[], R> = (...args: T) => Promise<R>;
 export declare function useWrapPromise<T extends any[], R>(fn: AsyncFunction<T, R>): AsyncFunction<T, R>;
