@@ -1,13 +1,13 @@
-import u, { useSyncExternalStore as g, useRef as k, useEffect as c, useCallback as l } from "react";
-import { Box as b, CircularProgress as m } from "@mui/material";
-import { v4 as S } from "uuid";
-let r = { uuids: {} }, i = [];
+import c, { useSyncExternalStore as g, useRef as b, useEffect as u, useCallback as l } from "react";
+import { Box as f, CircularProgress as S } from "@mui/material";
+import { v4 as m } from "uuid";
+let o = { uuids: {} }, i = [];
 const n = {
   blockingStarted: (t) => {
-    r.uuids[t] = !0, r = { ...r }, a();
+    o.uuids[t] = !0, o = { ...o }, a();
   },
   blockingStopped: (t) => {
-    delete r.uuids[t], r = { ...r }, a();
+    delete o.uuids[t], o = { ...o }, a();
   },
   subscribe(t) {
     return i = [...i, t], () => {
@@ -15,7 +15,7 @@ const n = {
     };
   },
   getSnapshot() {
-    return r;
+    return o;
   }
 };
 function a() {
@@ -27,8 +27,8 @@ function d() {
   return Object.keys(t.uuids).length > 0;
 }
 function h() {
-  return d() ? u.createElement(
-    b,
+  return d() ? c.createElement(
+    f,
     { sx: {
       display: "flex",
       backgroundColor: "rgba(0,0,0,0.4)",
@@ -43,20 +43,26 @@ function h() {
       left: 0,
       top: 0
     } },
-    u.createElement(m, { color: "primary", thickness: 6, size: 50 })
+    c.createElement(S, { color: "primary", thickness: 6, size: 50 })
   ) : null;
 }
 function I() {
-  const t = r.uuids;
+  const t = o.uuids;
   return Object.keys(t).length > 0;
 }
+function E(t) {
+  n.blockingStarted(t);
+}
+function y(t) {
+  n.blockingStopped(t);
+}
 function p(t) {
-  const e = k(""), o = g(n.subscribe, n.getSnapshot).uuids[e.current];
-  return c(() => (e.current = S(), () => {
+  const e = b(""), r = g(n.subscribe, n.getSnapshot).uuids[e.current];
+  return u(() => (e.current = m(), () => {
     n.blockingStopped(e.current);
-  }), []), c(() => {
-    !o && t ? n.blockingStarted(e.current) : o && t === !1 && n.blockingStopped(e.current);
-  }, [t, o]), {
+  }), []), u(() => {
+    !r && t ? n.blockingStarted(e.current) : r && t === !1 && n.blockingStopped(e.current);
+  }, [t, r]), {
     startLoading: l(() => {
       n.blockingStarted(e.current);
     }, []),
@@ -65,21 +71,23 @@ function p(t) {
     }, [])
   };
 }
-function E(t) {
+function x(t) {
   const { startLoading: e, stopLoading: s } = p();
-  return async (...o) => {
+  return async (...r) => {
     e();
-    const f = await t(...o);
-    return s(), f;
+    const k = await t(...r);
+    return s(), k;
   };
 }
-const C = {
+const U = {
   useIsUserInputBlocked: d,
   isUserInputBlocked: I,
   useBlockUserInput: p,
-  useWrapPromise: E,
+  useWrapPromise: x,
+  blockingStarted: E,
+  blockingStopped: y,
   View: h
 };
 export {
-  C as BlockUserInput
+  U as BlockUserInput
 };
