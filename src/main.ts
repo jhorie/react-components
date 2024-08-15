@@ -8,6 +8,7 @@ import {
   blockingStopped,
 } from "./BlockUserInput/BlockingUserInput";
 export { ScrollShadows } from "./ScrollShadows/ScrollShadow";
+export type { PropsScrollShadows } from "./ScrollShadows/ScrollShadow";
 
 export const BlockUserInput = {
   useIsUserInputBlocked,
