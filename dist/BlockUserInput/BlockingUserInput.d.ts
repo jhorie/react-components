@@ -1,5 +1,4 @@
-import React from "react";
-export declare function BlockingUserInput(): React.JSX.Element | null;
+export declare function BlockingUserInput(): import("react/jsx-runtime").JSX.Element | null;
 export declare function isUserInputBlocked(): boolean;
 /**
  * @deprecated

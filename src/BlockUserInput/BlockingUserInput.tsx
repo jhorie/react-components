@@ -1,6 +1,6 @@
 import { Box, CircularProgress } from "@mui/material";
 import { useIsUserInputBlocked } from "#BlockUserInput/useIsUserInputBlocked";
-import React, { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 import { blockingEntities, blockingEntitiesStore } from "./blockingEntitiesStore";
 import { v4 as uuidv4 } from "uuid";
 
@@ -74,10 +74,10 @@ export function useBlockUserInput<T>(isLoading?: boolean) {
   }, [isLoading, isLoadingInStore]);
 
   return {
-      blockingStarted: useCallback(() => {
+    blockingStarted: useCallback(() => {
       blockingEntitiesStore.blockingStarted(uuid.current);
     }, []),
-      blockingStopped: useCallback(() => {
+    blockingStopped: useCallback(() => {
       blockingEntitiesStore.blockingStopped(uuid.current);
     }, []),
   };

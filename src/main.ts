@@ -7,6 +7,7 @@ import {
   blockingStarted,
   blockingStopped,
 } from "./BlockUserInput/BlockingUserInput";
+export { ScrollShadows } from "~/ScrollShadows/ScrollShadow";
 
 export const BlockUserInput = {
   useIsUserInputBlocked,
@@ -17,3 +18,4 @@ export const BlockUserInput = {
   blockingStopped,
   View: BlockingUserInput,
 };
+
