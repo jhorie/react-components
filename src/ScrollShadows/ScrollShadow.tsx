@@ -24,17 +24,19 @@ const shadowCssBottom = {
   position: "sticky",
 };
 
+export type PropsScrollShadows = {
+  children: ReactNode;
+  containerRef: RefObject<HTMLElement>;
+  styleTopShadow?: BoxProps["sx"];
+  styleBottomShadow?: BoxProps["sx"];
+}
+
 export function ScrollShadows({
   children,
   containerRef,
   styleTopShadow = {},
   styleBottomShadow = {},
-}: {
-  children: ReactNode;
-  containerRef: RefObject<HTMLElement>;
-  styleTopShadow?: BoxProps["sx"];
-  styleBottomShadow?: BoxProps["sx"];
-}) {
+}: PropsScrollShadows) {
   useScrollShadows({ orientation: Orientation.VERTICAL, container: containerRef });
   return (
     <>
