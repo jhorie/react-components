@@ -4,9 +4,9 @@ import { Box, BoxProps } from "@mui/material";
 
 const shadowCss: BoxProps["sx"] = {
   zIndex: 100,
-  position:"sticky",
-  pointerEvents:"none"
-}
+  position: "sticky",
+  pointerEvents: "none",
+};
 
 const shadowColumnCss: BoxProps["sx"] = {
   ...shadowCss,
@@ -14,8 +14,8 @@ const shadowColumnCss: BoxProps["sx"] = {
   minWidth: "100%",
   height: "40px",
   minHeight: "40px",
-  marginTop:"-40px",
-} ;
+  marginTop: "-40px",
+};
 const shadowRowCss: BoxProps["sx"] = {
   ...shadowCss,
   top: 0,
@@ -52,6 +52,7 @@ export type PropsScrollShadows = {
   styleTopShadow?: BoxProps["sx"];
   styleBottomShadow?: BoxProps["sx"];
   direction?: ScrollShadowsDirection;
+  threshold?: number;
 };
 
 export function ScrollShadows({
@@ -60,8 +61,9 @@ export function ScrollShadows({
   direction = "column",
   styleTopShadow = {},
   styleBottomShadow = {},
+  threshold = 40,
 }: PropsScrollShadows) {
-  useScrollShadows({ direction, container: containerRef });
+  useScrollShadows({ direction, container: containerRef, threshold });
   return (
     <>
       {direction == "column" ? (
@@ -90,9 +92,11 @@ const scrollGradientWidth = scrollGradientHeight;
 export function useScrollShadows({
   container,
   direction,
+  threshold,
 }: {
   container: RefObject<HTMLElement>;
   direction: ScrollShadowsDirection;
+  threshold: number;
 }) {
   const onScroll = useCallback(
     debounce(() => {
@@ -103,7 +107,7 @@ export function useScrollShadows({
 
           if (shadowTop && shadowBottom) {
             const totalScrollHeight = container.current.scrollHeight - container.current.offsetHeight;
-            if (totalScrollHeight == 0) {
+            if (totalScrollHeight < threshold) {
               shadowTop.style.opacity = String(0);
               shadowBottom.style.opacity = String(0);
             } else {
@@ -119,7 +123,7 @@ export function useScrollShadows({
 
           if (shadowLeft && shadowRight) {
             const totalScrollWidth = container.current.scrollWidth - container.current.offsetWidth;
-            if (totalScrollWidth == 0) {
+            if (totalScrollWidth < threshold) {
               shadowLeft.style.opacity = String(0);
               shadowRight.style.opacity = String(0);
             } else {
@@ -135,28 +139,43 @@ export function useScrollShadows({
     [container.current]
   );
 
-  const onResize = useCallback(
-    debounce(() => {
-      if (container.current) {
-        if (direction == "column") {
-          const totalScrollHeight = container.current.scrollHeight - container.current.offsetHeight;
+  const resize = useCallback((element: HTMLElement) => {
+    if (element) {
+      if (direction == "column") {
+        const totalScrollHeight = element.scrollHeight - element.offsetHeight;
 
-          if (totalScrollHeight === 0) {
-            const shadowBottom: HTMLElement | null = container.current.querySelector(".shadow--bottom");
-            if (shadowBottom) {
-              shadowBottom.style.opacity = "0";
-            }
-          }
-        } else if (direction == "row") {
-          const totalScrollWidth = container.current.scrollWidth - container.current.offsetWidth;
-
-          if (totalScrollWidth === 0) {
-            const shadowRight: HTMLElement | null = container.current.querySelector(".shadow--right");
-            if (shadowRight) {
-              shadowRight.style.opacity = "0";
-            }
+        const shadowBottom: HTMLElement | null = element.querySelector(".shadow--bottom");
+        if (shadowBottom) {
+          if (totalScrollHeight < threshold) {
+            shadowBottom.style.opacity = "0";
+          } else {
+            shadowBottom.style.opacity = String(
+              Math.min((totalScrollHeight - element.scrollTop) / scrollGradientHeight, 1)
+            );
           }
         }
+      } else if (direction == "row") {
+        const totalScrollWidth = element.scrollWidth - element.offsetWidth;
+
+        const shadowRight: HTMLElement | null = element.querySelector(".shadow--right");
+        if (shadowRight) {
+          if (totalScrollWidth < threshold) {
+            shadowRight.style.opacity = "0";
+          } else {
+            shadowRight.style.opacity = String(
+              Math.min((totalScrollWidth - element.scrollLeft) / scrollGradientWidth, 1)
+            );
+          }
+        }
+      }
+    }
+  }, []);
+
+  const onResize = useCallback(
+    debounce(() => {
+      const element = container.current;
+      if (element) {
+        resize(element);
       }
     }),
     [container.current]
@@ -166,25 +185,7 @@ export function useScrollShadows({
     const element = container.current;
     let observer: MutationObserver | null = null;
     if (element) {
-      if (direction == "column") {
-        const totalScrollHeight = element.scrollHeight - element.offsetHeight;
-
-        if (totalScrollHeight === 0) {
-          const shadowBottom: HTMLElement | null = element.querySelector(".shadow--bottom");
-          if (shadowBottom) {
-            shadowBottom.style.opacity = "0";
-          }
-        }
-      } else if (direction == "row") {
-        const totalScrollWidth = element.scrollWidth - element.offsetWidth;
-
-        if (totalScrollWidth === 0) {
-          const shadowRight: HTMLElement | null = element.querySelector(".shadow--right");
-          if (shadowRight) {
-            shadowRight.style.opacity = "0";
-          }
-        }
-      }
+      resize(element);
 
       element.addEventListener("scroll", onScroll);
       element.addEventListener("resize", onResize);

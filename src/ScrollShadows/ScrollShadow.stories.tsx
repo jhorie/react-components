@@ -49,7 +49,7 @@ export const Row: Story = {
     (Story) => {
       const ref = useRef<HTMLDivElement>(null);
       const elements: number[] = [];
-      for (let i = 1; i < 100; i++) {
+      for (let i = 1; i < 40; i++) {
         elements.push(i);
       }
       return (
@@ -83,3 +83,4 @@ export const Row: Story = {
     },
   ],
 };
+
