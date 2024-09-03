@@ -11,7 +11,7 @@ const shadowCss: BoxProps["sx"] = {
 const shadowColumnCss: BoxProps["sx"] = {
   ...shadowCss,
   left: 0,
-  width: "100%",
+  minWidth: "100%",
   height: "40px",
   minHeight: "40px",
   marginTop:"-40px",
@@ -19,7 +19,7 @@ const shadowColumnCss: BoxProps["sx"] = {
 const shadowRowCss: BoxProps["sx"] = {
   ...shadowCss,
   top: 0,
-  height: "100%",
+  minHeight: "100%",
   width: "20px",
   minWidth: "20px",
   marginLeft: "-20px",

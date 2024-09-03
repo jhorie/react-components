@@ -2,25 +2,25 @@ import Ye, { useSyncExternalStore as Me, useRef as xr, useEffect as oe, useCallb
 import { Box as U, CircularProgress as Cr } from "@mui/material";
 import { v4 as Or } from "uuid";
 import { debounce as Ie } from "lodash";
-let x = { uuids: {} }, B = [];
+let x = { uuids: {} }, H = [];
 const w = {
   blockingStarted: (n) => {
-    x.uuids[n] = !0, x = { ...x }, Fe();
+    x.uuids[n] = !0, x = { ...x }, We();
   },
   blockingStopped: (n) => {
-    delete x.uuids[n], x = { ...x }, Fe();
+    delete x.uuids[n], x = { ...x }, We();
   },
   subscribe(n) {
-    return B = [...B, n], () => {
-      B = B.filter((c) => c !== n);
+    return H = [...H, n], () => {
+      H = H.filter((c) => c !== n);
     };
   },
   getSnapshot() {
     return x;
   }
 };
-function Fe() {
-  for (let n of B)
+function We() {
+  for (let n of H)
     n();
 }
 function Ue() {
@@ -37,17 +37,17 @@ var ae = { exports: {} }, Y = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var We;
+var Fe;
 function jr() {
-  if (We) return Y;
-  We = 1;
+  if (Fe) return Y;
+  Fe = 1;
   var n = Ye, c = Symbol.for("react.element"), g = Symbol.for("react.fragment"), v = Object.prototype.hasOwnProperty, a = n.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner, f = { key: !0, ref: !0, __self: !0, __source: !0 };
   function E(S, b, I) {
-    var R, T = {}, O = null, H = null;
-    I !== void 0 && (O = "" + I), b.key !== void 0 && (O = "" + b.key), b.ref !== void 0 && (H = b.ref);
+    var R, T = {}, O = null, B = null;
+    I !== void 0 && (O = "" + I), b.key !== void 0 && (O = "" + b.key), b.ref !== void 0 && (B = b.ref);
     for (R in b) v.call(b, R) && !f.hasOwnProperty(R) && (T[R] = b[R]);
     if (S && S.defaultProps) for (R in b = S.defaultProps, b) T[R] === void 0 && (T[R] = b[R]);
-    return { $$typeof: c, type: S, key: O, ref: H, props: T, _owner: a.current };
+    return { $$typeof: c, type: S, key: O, ref: B, props: T, _owner: a.current };
   }
   return Y.Fragment = g, Y.jsx = E, Y.jsxs = E, Y;
 }
@@ -64,14 +64,14 @@ var M = {};
 var De;
 function Pr() {
   return De || (De = 1, process.env.NODE_ENV !== "production" && function() {
-    var n = Ye, c = Symbol.for("react.element"), g = Symbol.for("react.portal"), v = Symbol.for("react.fragment"), a = Symbol.for("react.strict_mode"), f = Symbol.for("react.profiler"), E = Symbol.for("react.provider"), S = Symbol.for("react.context"), b = Symbol.for("react.forward_ref"), I = Symbol.for("react.suspense"), R = Symbol.for("react.suspense_list"), T = Symbol.for("react.memo"), O = Symbol.for("react.lazy"), H = Symbol.for("react.offscreen"), se = Symbol.iterator, Ve = "@@iterator";
+    var n = Ye, c = Symbol.for("react.element"), g = Symbol.for("react.portal"), v = Symbol.for("react.fragment"), a = Symbol.for("react.strict_mode"), f = Symbol.for("react.profiler"), E = Symbol.for("react.provider"), S = Symbol.for("react.context"), b = Symbol.for("react.forward_ref"), I = Symbol.for("react.suspense"), R = Symbol.for("react.suspense_list"), T = Symbol.for("react.memo"), O = Symbol.for("react.lazy"), B = Symbol.for("react.offscreen"), se = Symbol.iterator, Ve = "@@iterator";
     function Ne(e) {
       if (e === null || typeof e != "object")
         return null;
       var r = se && e[se] || e[Ve];
       return typeof r == "function" ? r : null;
     }
-    var F = n.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+    var W = n.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
     function h(e) {
       {
         for (var r = arguments.length, t = new Array(r > 1 ? r - 1 : 0), o = 1; o < r; o++)
@@ -81,7 +81,7 @@ function Pr() {
     }
     function qe(e, r, t) {
       {
-        var o = F.ReactDebugCurrentFrame, u = o.getStackAddendum();
+        var o = W.ReactDebugCurrentFrame, u = o.getStackAddendum();
         u !== "" && (r += "%s", t = t.concat([u]));
         var l = t.map(function(s) {
           return String(s);
@@ -92,7 +92,7 @@ function Pr() {
     var ze = !1, Je = !1, Ge = !1, Ke = !1, Xe = !1, ue;
     ue = Symbol.for("react.module.reference");
     function Ze(e) {
-      return !!(typeof e == "string" || typeof e == "function" || e === v || e === f || Xe || e === a || e === I || e === R || Ke || e === H || ze || Je || Ge || typeof e == "object" && e !== null && (e.$$typeof === O || e.$$typeof === T || e.$$typeof === E || e.$$typeof === S || e.$$typeof === b || // This needs to include all possible module reference object
+      return !!(typeof e == "string" || typeof e == "function" || e === v || e === f || Xe || e === a || e === I || e === R || Ke || e === B || ze || Je || Ge || typeof e == "object" && e !== null && (e.$$typeof === O || e.$$typeof === T || e.$$typeof === E || e.$$typeof === S || e.$$typeof === b || // This needs to include all possible module reference object
       // types supported by any Flight configuration anywhere since
       // we don't know which Flight build this will end up being used
       // with.
@@ -215,7 +215,7 @@ function Pr() {
         A < 0 && h("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
       }
     }
-    var G = F.ReactCurrentDispatcher, K;
+    var G = W.ReactCurrentDispatcher, K;
     function V(e, r, t) {
       {
         if (K === void 0)
@@ -341,7 +341,7 @@ function Pr() {
         }
       return "";
     }
-    var L = Object.prototype.hasOwnProperty, me = {}, Ee = F.ReactDebugCurrentFrame;
+    var L = Object.prototype.hasOwnProperty, me = {}, Ee = W.ReactDebugCurrentFrame;
     function z(e) {
       if (e) {
         var r = e._owner, t = q(e.type, e._source, r ? r.type : null);
@@ -392,7 +392,7 @@ function Pr() {
       if (ur(e))
         return h("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", sr(e)), Se(e);
     }
-    var $ = F.ReactCurrentOwner, lr = {
+    var $ = W.ReactCurrentOwner, lr = {
       key: !0,
       ref: !0,
       __self: !0,
@@ -490,8 +490,8 @@ function Pr() {
         return gr(e, i, y, u, o, $.current, s);
       }
     }
-    var ee = F.ReactCurrentOwner, ke = F.ReactDebugCurrentFrame;
-    function W(e) {
+    var ee = W.ReactCurrentOwner, ke = W.ReactDebugCurrentFrame;
+    function F(e) {
       if (e) {
         var r = e._owner, t = q(e.type, e._source, r ? r.type : null);
         ke.setExtraStackFrame(t);
@@ -541,7 +541,7 @@ Check the top-level render call using <` + t + ">.");
           return;
         xe[t] = !0;
         var o = "";
-        e && e._owner && e._owner !== ee.current && (o = " It was passed a child from " + k(e._owner.type) + "."), W(e), h('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', t, o), W(null);
+        e && e._owner && e._owner !== ee.current && (o = " It was passed a child from " + k(e._owner.type) + "."), F(e), h('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', t, o), F(null);
       }
     }
     function Oe(e, r) {
@@ -593,11 +593,11 @@ Check the top-level render call using <` + t + ">.");
         for (var r = Object.keys(e.props), t = 0; t < r.length; t++) {
           var o = r[t];
           if (o !== "children" && o !== "key") {
-            W(e), h("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", o), W(null);
+            F(e), h("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", o), F(null);
             break;
           }
         }
-        e.ref !== null && (W(e), h("Invalid attribute `ref` supplied to `React.Fragment`."), W(null));
+        e.ref !== null && (F(e), h("Invalid attribute `ref` supplied to `React.Fragment`."), F(null));
       }
     }
     var je = {};
@@ -673,17 +673,17 @@ function Ir() {
     top: 0
   }, children: C.jsx(Cr, { color: "primary", thickness: 6, size: 50 }) }) : null;
 }
-function Fr() {
+function Wr() {
   const n = x.uuids;
   return Object.keys(n).length > 0;
 }
-function Wr(n) {
+function Fr(n) {
   w.blockingStarted(n);
 }
 function Dr(n) {
   w.blockingStopped(n);
 }
-function Be(n) {
+function He(n) {
   const c = xr(""), v = Me(w.subscribe, w.getSnapshot).uuids[c.current];
   return oe(() => (c.current = Or(), () => {
     w.blockingStopped(c.current);
@@ -699,28 +699,28 @@ function Be(n) {
   };
 }
 function Ar(n) {
-  const { blockingStarted: c, blockingStopped: g } = Be();
+  const { blockingStarted: c, blockingStopped: g } = He();
   return async (...v) => {
     c();
     const a = await n(...v);
     return g(), a;
   };
 }
-const He = {
+const Be = {
   zIndex: 100,
   position: "sticky",
   pointerEvents: "none"
 }, Ae = {
-  ...He,
+  ...Be,
   left: 0,
-  width: "100%",
+  minWidth: "100%",
   height: "40px",
   minHeight: "40px",
   marginTop: "-40px"
 }, Le = {
-  ...He,
+  ...Be,
   top: 0,
-  height: "100%",
+  minHeight: "100%",
   width: "20px",
   minWidth: "20px",
   marginLeft: "-20px"
@@ -795,10 +795,10 @@ function Ur({ container: n, direction: c }) {
 }
 const zr = {
   useIsUserInputBlocked: Ue,
-  isUserInputBlocked: Fr,
-  useBlockUserInput: Be,
+  isUserInputBlocked: Wr,
+  useBlockUserInput: He,
   useWrapPromise: Ar,
-  blockingStarted: Wr,
+  blockingStarted: Fr,
   blockingStopped: Dr,
   View: Ir
 };
