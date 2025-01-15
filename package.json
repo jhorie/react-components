@@ -44,7 +44,7 @@
     "lodash": ">=4.17",
     "react": ">=18",
     "react-dom": ">=18",
-    "uuid": "^10|^11"
+    "uuid": "^10 || ^11"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",
