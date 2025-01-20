@@ -3,7 +3,7 @@ import { BoxProps } from "@mui/material";
 export type ScrollShadowsDirection = "column" | "row";
 export type PropsScrollShadows = {
     children: ReactNode;
-    containerRef: RefObject<HTMLElement>;
+    containerRef: RefObject<HTMLElement | undefined>;
     styleTopShadow?: BoxProps["sx"];
     styleBottomShadow?: BoxProps["sx"];
     direction?: ScrollShadowsDirection;
@@ -11,7 +11,7 @@ export type PropsScrollShadows = {
 };
 export declare function ScrollShadows({ children, containerRef, direction, styleTopShadow, styleBottomShadow, threshold, }: PropsScrollShadows): import("react/jsx-runtime").JSX.Element;
 export declare function useScrollShadows({ container, direction, threshold, }: {
-    container: RefObject<HTMLElement>;
+    container: RefObject<HTMLElement | undefined>;
     direction: ScrollShadowsDirection;
     threshold: number;
-}): RefObject<HTMLElement>;
+}): RefObject<HTMLElement | undefined>;

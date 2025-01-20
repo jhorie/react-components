@@ -23,3 +23,6 @@ export const BlockUserInput = {
 // export const ScrollShadow = {
 //   View: ScrollShadows
 // }
+
+export { isOpen, isOpenAt, isClosed, isClosedAt } from "./OpeningHours/isOpenAt";
+export type { OpeningHours, OpeningHoursForDay, TimeRange } from "./OpeningHours/OpeningHours";

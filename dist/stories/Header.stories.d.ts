@@ -7,9 +7,9 @@ declare const meta: {
         layout: string;
     };
     args: {
-        onLogin: import("@vitest/spy").Mock<[], void>;
-        onLogout: import("@vitest/spy").Mock<[], void>;
-        onCreateAccount: import("@vitest/spy").Mock<[], void>;
+        onLogin: import("@vitest/spy").Mock<(...args: any[]) => any>;
+        onLogout: import("@vitest/spy").Mock<(...args: any[]) => any>;
+        onCreateAccount: import("@vitest/spy").Mock<(...args: any[]) => any>;
     };
 };
 export default meta;

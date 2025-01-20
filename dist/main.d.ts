@@ -11,3 +11,5 @@ export declare const BlockUserInput: {
     blockingStopped: typeof blockingStopped;
     View: typeof BlockingUserInput;
 };
+export { isOpen, isOpenAt, isClosed, isClosedAt } from "./OpeningHours/isOpenAt";
+export type { OpeningHours, OpeningHoursForDay, TimeRange } from "./OpeningHours/OpeningHours";

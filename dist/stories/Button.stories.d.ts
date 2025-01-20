@@ -12,7 +12,7 @@ declare const meta: {
         };
     };
     args: {
-        onClick: import("@vitest/spy").Mock<[], void>;
+        onClick: import("@vitest/spy").Mock<(...args: any[]) => any>;
     };
 };
 export default meta;

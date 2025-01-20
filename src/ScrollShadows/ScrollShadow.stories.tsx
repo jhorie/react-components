@@ -18,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   decorators: [
     (Story) => {
-      const ref = useRef<HTMLDivElement>(null);
+      const ref = useRef<HTMLElement>(undefined);
       const elements: number[] = [];
       for (let i = 1; i < 100; i++) {
         elements.push(i);
@@ -47,7 +47,7 @@ export const Default: Story = {
 export const Row: Story = {
   decorators: [
     (Story) => {
-      const ref = useRef<HTMLDivElement>(null);
+      const ref = useRef<HTMLElement>(undefined);
       const elements: number[] = [];
       for (let i = 1; i < 100; i++) {
         elements.push(i);
