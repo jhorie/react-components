@@ -25,4 +25,4 @@ export const BlockUserInput = {
 // }
 
 export { isOpen, isOpenAt, isClosed, isClosedAt } from "./OpeningHours/isOpenAt";
-export type { OpeningHours, OpeningHoursForDay, TimeRange } from "./OpeningHours/OpeningHours";
+export type { OpeningHours, OpeningHoursForDay, TimeRangeS } from "./OpeningHours/OpeningHours";
