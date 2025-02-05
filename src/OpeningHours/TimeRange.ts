@@ -1,0 +1,32 @@
+import { Time, TimeMethods } from "~/OpeningHours/Time";
+import { toTimeRange } from "~/OpeningHours/nextOpen";
+
+export type TimeRange = {
+  start: Time;
+  end: Time;
+};
+
+function isReversed(timeRange: TimeRange): boolean {
+  return TimeMethods.isAfter(timeRange.start, timeRange.end);
+}
+
+function overflowsNextDay(timeRange: TimeRange): boolean {
+  return isReversed(timeRange);
+}
+
+function spillsOverToNextDay(timeRange: TimeRange): boolean {
+  return isReversed(timeRange);
+}
+
+function containsTime(timeRange: TimeRange, time: Time): boolean {
+  return (
+    TimeMethods.isSameOrAfter(time, timeRange.start) &&
+    (overflowsNextDay(timeRange) || TimeMethods.isBefore(time, timeRange.end))
+  );
+}
+
+function containsNightTime(timeRange: TimeRange, time: Time): boolean {
+  return overflowsNextDay(timeRange) && containsTime({ ...timeRange, start: { hours: 0, minutes: 0 } }, time);
+}
+
+export const TimeRangeMethods = { containsTime, containsNightTime };
