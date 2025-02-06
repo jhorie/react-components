@@ -5,20 +5,23 @@ import { Time, TimeMethods } from "~/OpeningHours/Time";
 import { OpeningHoursForDayMethods } from "~/OpeningHours/OpeningHoursForDay";
 import { isClosedAt, isOpenAt } from "~/OpeningHours/isOpenAt";
 
-export type OpeningHours = {
-  monday?: OpeningHoursForDay[];
-  tuesday?: OpeningHoursForDay[];
-  wednesday?: OpeningHoursForDay[];
-  thursday?: OpeningHoursForDay[];
-  friday?: OpeningHoursForDay[];
-  saturday?: OpeningHoursForDay[];
-  sunday?: OpeningHoursForDay[];
-  exceptions?: { [date: string]: OpeningHoursForDay[] };
+export type Day = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
+export type TDate = string;
+export const days: Day[] = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+
+export const isOfTypeDay = (input: string): input is Day => {
+  return (days as readonly string[]).includes(input);
 };
+
+export type OpeningHours<T = undefined> = {
+  [day in Day]?: OpeningHoursForDay<T>[];
+} & { exceptions?: OpeningHoursExceptions<T> };
+
+export type OpeningHoursExceptions<T = undefined> = { [date: TDate]: OpeningHoursForDay<T>[] | undefined };
 
 export type TimeRangeS = string;
 
-export type OpeningHoursForDay = TimeRangeS | { 0: TimeRangeS; data: unknown };
+export type OpeningHoursForDay<T = undefined> = TimeRangeS | { 0: TimeRangeS; data: T };
 
 export function isOpenInOpeningHoursForDay(openingHoursForDay: OpeningHoursForDay[] | null, at: Date): boolean {
   return (

@@ -1,17 +1,25 @@
-export type OpeningHours = {
-    monday?: OpeningHoursForDay[];
-    tuesday?: OpeningHoursForDay[];
-    wednesday?: OpeningHoursForDay[];
-    thursday?: OpeningHoursForDay[];
-    friday?: OpeningHoursForDay[];
-    saturday?: OpeningHoursForDay[];
-    sunday?: OpeningHoursForDay[];
-    exceptions?: {
-        [date: string]: OpeningHoursForDay[];
-    };
+import { TimeRange } from "~/OpeningHours/TimeRange";
+export type Day = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
+export type TDate = string;
+export declare const days: Day[];
+export declare const isOfTypeDay: (input: string) => input is Day;
+export type OpeningHours<T = undefined> = {
+    [day in Day]?: OpeningHoursForDay<T>[];
+} & {
+    exceptions?: OpeningHoursExceptions<T>;
 };
-export type TimeRange = string;
-export type OpeningHoursForDay = TimeRange | {
-    0: TimeRange;
-    data: unknown;
+export type OpeningHoursExceptions<T = undefined> = {
+    [date: TDate]: OpeningHoursForDay<T>[] | undefined;
 };
+export type TimeRangeS = string;
+export type OpeningHoursForDay<T = undefined> = TimeRangeS | {
+    0: TimeRangeS;
+    data: T;
+};
+export declare function isOpenInOpeningHoursForDay(openingHoursForDay: OpeningHoursForDay[] | null, at: Date): boolean;
+export declare function isOpenInTimeRange(date: Date, timeRange: string): boolean;
+export declare function forDate(openingHours: OpeningHours, date: Date): OpeningHoursForDay[];
+export declare function forDateTime(openingHours: OpeningHours, date: Date): OpeningHoursForDay | null;
+export declare function currentOpenRange(openingHours: OpeningHours, date: Date): TimeRange | null;
+export declare function nextOpen(openingHours: OpeningHours, at?: Date | null): Date | null;
+export declare function nextClose(openingHours: OpeningHours, at?: Date | null): Date | null;

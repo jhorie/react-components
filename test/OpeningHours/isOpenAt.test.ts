@@ -144,7 +144,7 @@ test("nextClose 2", () => {
     new Date("2025-01-21T16:00:00Z").getTime()
   );
 });
-test.only("nextClose always open", () => {
+test("nextClose always open", () => {
   const openingHours: OpeningHours = {
     monday: ["00:00-24:00"],
     tuesday: ["00:00-24:00"],

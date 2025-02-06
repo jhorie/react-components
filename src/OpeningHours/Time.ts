@@ -23,8 +23,12 @@ function timeToNumber(time: Time): number {
   return time.hours * 60 + time.minutes;
 }
 
+function timeToString(time: Time): string {
+  return String(time.hours).padStart(2, "0") + ":" + String(time.minutes).padStart(2, "0");
+}
+
 function fromDate(date: Date): Time {
   return { hours: date.getUTCHours(), minutes: date.getUTCMinutes() };
 }
 
-export const TimeMethods = { isSame, isBefore, isAfter, isSameOrAfter, timeToNumber, fromDate };
+export const TimeMethods = { isSame, isBefore, isAfter, isSameOrAfter, timeToNumber, fromDate, timeToString };

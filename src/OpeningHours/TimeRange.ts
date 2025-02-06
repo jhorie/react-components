@@ -29,4 +29,8 @@ function containsNightTime(timeRange: TimeRange, time: Time): boolean {
   return overflowsNextDay(timeRange) && containsTime({ ...timeRange, start: { hours: 0, minutes: 0 } }, time);
 }
 
-export const TimeRangeMethods = { containsTime, containsNightTime };
+function timeRangeToString(timeRange: TimeRange): string {
+  return `${TimeMethods.timeToString(timeRange.start)}-${TimeMethods.timeToString(timeRange.end)}`;
+}
+
+export const TimeRangeMethods = { containsTime, containsNightTime, timeRangeToString };
