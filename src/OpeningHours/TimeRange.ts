@@ -33,4 +33,10 @@ function timeRangeToString(timeRange: TimeRange): string {
   return `${TimeMethods.timeToString(timeRange.start)}-${TimeMethods.timeToString(timeRange.end)}`;
 }
 
-export const TimeRangeMethods = { containsTime, containsNightTime, timeRangeToString };
+function timeRangesAreEqual(timeRange: TimeRange, otherTimeRange: TimeRange): boolean {
+  return (
+    TimeMethods.isSame(timeRange.start, otherTimeRange.start) && TimeMethods.isSame(timeRange.end, otherTimeRange.end)
+  );
+}
+
+export const TimeRangeMethods = { containsTime, containsNightTime, timeRangeToString, timeRangesAreEqual };

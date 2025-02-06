@@ -33,8 +33,9 @@ export type {
   Day,
   TDate,
 } from "./OpeningHours/OpeningHours";
-export { isOfTypeDay, days } from "./OpeningHours/OpeningHours";
+export { isOfTypeDay, days, nextOpen, nextClose } from "./OpeningHours/OpeningHours";
 export type { TimeRange } from "./OpeningHours/TimeRange";
 export { getTimeRangeOfOpeningHoursForDay } from "./OpeningHours/nextOpen";
 export { TimeMethods } from "./OpeningHours/Time";
+export type { Time } from "./OpeningHours/Time";
 export { TimeRangeMethods } from "./OpeningHours/TimeRange";

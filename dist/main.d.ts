@@ -13,8 +13,9 @@ export declare const BlockUserInput: {
 };
 export { isOpen, isOpenAt, isClosed, isClosedAt } from "./OpeningHours/isOpenAt";
 export type { OpeningHours, OpeningHoursForDay, TimeRangeS, OpeningHoursExceptions, Day, TDate, } from "./OpeningHours/OpeningHours";
-export { isOfTypeDay, days } from "./OpeningHours/OpeningHours";
+export { isOfTypeDay, days, nextOpen, nextClose } from "./OpeningHours/OpeningHours";
 export type { TimeRange } from "./OpeningHours/TimeRange";
 export { getTimeRangeOfOpeningHoursForDay } from "./OpeningHours/nextOpen";
 export { TimeMethods } from "./OpeningHours/Time";
+export type { Time } from "./OpeningHours/Time";
 export { TimeRangeMethods } from "./OpeningHours/TimeRange";
