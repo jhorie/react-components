@@ -1,9 +1,10 @@
 import { addDays, format, isAfter, isBefore, isEqual, subDays } from "date-fns";
 import { TimeRange } from "~/OpeningHours/TimeRange";
-import { getTimeRangeOfOpeningHoursForDay, toTimeRange } from "~/OpeningHours/nextOpen";
+import { getTimeRangeOfOpeningHoursForDay } from "~/OpeningHours/nextOpen";
 import { Time, TimeMethods } from "~/OpeningHours/Time";
 import { OpeningHoursForDayMethods } from "~/OpeningHours/OpeningHoursForDay";
 import { isClosedAt, isOpenAt } from "~/OpeningHours/isOpenAt";
+import { TZDate } from "@date-fns/tz";
 
 export type Day = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
 export type TDate = string;
@@ -15,7 +16,7 @@ export const isOfTypeDay = (input: string): input is Day => {
 
 export type OpeningHours<T = undefined> = {
   [day in Day]?: OpeningHoursForDay<T>[];
-} & { exceptions?: OpeningHoursExceptions<T> };
+} & { exceptions?: OpeningHoursExceptions<T>; timezone?: string };
 
 export type OpeningHoursExceptions<T = undefined> = { [date: TDate]: OpeningHoursForDay<T>[] | undefined };
 
@@ -37,9 +38,9 @@ export function isOpenInTimeRange(date: Date, timeRange: string): boolean {
   const [endHours, endMinutes] = endTime.split(":");
 
   let startDate = new Date(date.getTime());
-  startDate.setUTCHours(Number(startHours), Number(startMinutes), 0, 0);
+  startDate.setHours(Number(startHours), Number(startMinutes), 0, 0);
   let endDate = new Date(date.getTime());
-  endDate.setUTCHours(Number(endHours), Number(endMinutes), 0, 0);
+  endDate.setHours(Number(endHours), Number(endMinutes), 0, 0);
 
   const endHoursPlusMinutes = 60 * Number(endHours) + Number(endMinutes);
   const startHoursPlusMinutes = 60 * Number(startHours) + Number(startMinutes);
@@ -77,6 +78,10 @@ export function forDateTime(openingHours: OpeningHours, date: Date): OpeningHour
   );
 }
 
+export function getTimezone(openingHours: OpeningHours): string {
+  return openingHours.timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
+}
+
 export function currentOpenRange(openingHours: OpeningHours, date: Date): TimeRange | null {
   const openingHoursForDay = forDateTime(openingHours, date);
   if (openingHoursForDay) {
@@ -86,8 +91,8 @@ export function currentOpenRange(openingHours: OpeningHours, date: Date): TimeRa
 }
 
 export function nextOpen(openingHours: OpeningHours, at: Date | null = null): Date | null {
-  at = at ?? new Date();
-  at = new Date(at.getTime());
+  at = at ?? new TZDate(new Date(), getTimezone(openingHours));
+  at = new TZDate(at.getTime(), getTimezone(openingHours));
 
   let openingHoursForDay = forDate(openingHours, at);
 
@@ -100,7 +105,7 @@ export function nextOpen(openingHours: OpeningHours, at: Date | null = null): Da
     }
 
     at = addDays(at, 1);
-    at?.setUTCHours(0, 0, 0, 0);
+    at?.setHours(0, 0, 0, 0);
 
     if (isOpenAt(openingHours, at) && !OpeningHoursForDayMethods.isOpenAtTheEndOfTheDay(openingHoursForDay)) {
       return at;
@@ -111,20 +116,18 @@ export function nextOpen(openingHours: OpeningHours, at: Date | null = null): Da
   }
 
   if (nextOpen) {
-    at?.setUTCHours(nextOpen.hours, nextOpen.minutes);
+    at?.setHours(nextOpen.hours, nextOpen.minutes, 0, 0);
     return at;
   }
   return null;
 }
 
 export function nextClose(openingHours: OpeningHours, at: Date | null = null): Date | null {
-  at = at ?? new Date();
-  at = new Date(at.getTime());
-
+  at = at ?? new TZDate(new Date(), getTimezone(openingHours));
+  at = new TZDate(at.getTime(), getTimezone(openingHours));
   const openRangeEnd = currentOpenRange(openingHours, at)?.end;
   if (openRangeEnd && openRangeEnd.hours < 24) {
-    at.setUTCHours(openRangeEnd.hours);
-    at.setUTCMinutes(openRangeEnd.minutes);
+    at.setHours(openRangeEnd.hours, openRangeEnd.minutes, 0, 0); // TODO CHECK
     return at;
   }
 
@@ -137,7 +140,6 @@ export function nextClose(openingHours: OpeningHours, at: Date | null = null): D
       nextClose = OpeningHoursForDayMethods.nextClose(openingHoursForDays, at);
     }
   }
-
   let openingHoursForDays = forDate(openingHours, at);
   if (!nextClose) {
     nextClose = OpeningHoursForDayMethods.nextClose(openingHoursForDays, at);
@@ -153,7 +155,6 @@ export function nextClose(openingHours: OpeningHours, at: Date | null = null): D
       at = addDays(at, 1);
     }
   }
-
   let tries = 366;
   while (!nextClose || nextClose.hours >= 24) {
     if (--tries < 0) {
@@ -161,7 +162,7 @@ export function nextClose(openingHours: OpeningHours, at: Date | null = null): D
     }
 
     at = addDays(at, 1);
-    at.setUTCHours(0, 0, 0, 0);
+    at?.setHours(0, 0, 0, 0);
 
     if (isClosedAt(openingHours, at) && OpeningHoursForDayMethods.isOpenAtTheEndOfTheDay(openingHoursForDays)) {
       return at;
@@ -172,7 +173,7 @@ export function nextClose(openingHours: OpeningHours, at: Date | null = null): D
   }
 
   if (nextClose) {
-    at.setUTCHours(nextClose.hours, nextClose.minutes);
+    at?.setHours(nextClose.hours, nextClose.minutes, 0, 0);
     return at;
   }
 

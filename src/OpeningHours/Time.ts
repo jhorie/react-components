@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 export type Time = {
   hours: number;
   minutes: number;
@@ -28,7 +30,10 @@ function timeToString(time: Time): string {
 }
 
 function fromDate(date: Date): Time {
-  return { hours: date.getUTCHours(), minutes: date.getUTCMinutes() };
+  return {
+    hours: Number(format(date, "H")),
+    minutes: Number(format(date, "m")),
+  };
 }
 
-export const TimeMethods = { isSame, isBefore, isAfter, isSameOrAfter, timeToNumber, fromDate, timeToString };
+export const TimeMethods = { isSame, isBefore, isAfter, isSameOrAfter, timeToNumber, fromDate: fromDate, timeToString };

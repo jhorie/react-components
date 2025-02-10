@@ -7,6 +7,7 @@ export type OpeningHours<T = undefined> = {
     [day in Day]?: OpeningHoursForDay<T>[];
 } & {
     exceptions?: OpeningHoursExceptions<T>;
+    timezone?: string;
 };
 export type OpeningHoursExceptions<T = undefined> = {
     [date: TDate]: OpeningHoursForDay<T>[] | undefined;
@@ -20,6 +21,7 @@ export declare function isOpenInOpeningHoursForDay(openingHoursForDay: OpeningHo
 export declare function isOpenInTimeRange(date: Date, timeRange: string): boolean;
 export declare function forDate(openingHours: OpeningHours, date: Date): OpeningHoursForDay[];
 export declare function forDateTime(openingHours: OpeningHours, date: Date): OpeningHoursForDay | null;
+export declare function getTimezone(openingHours: OpeningHours): string;
 export declare function currentOpenRange(openingHours: OpeningHours, date: Date): TimeRange | null;
 export declare function nextOpen(openingHours: OpeningHours, at?: Date | null): Date | null;
 export declare function nextClose(openingHours: OpeningHours, at?: Date | null): Date | null;

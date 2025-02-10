@@ -38,6 +38,7 @@
     "vitest": "npx vitest"
   },
   "peerDependencies": {
+    "@date-fns/tz": ">=1",
     "@emotion/react": ">=11.0.0",
     "@emotion/styled": ">=11.0.0",
     "@mui/material": ">=5.0.0",

@@ -1,5 +1,4 @@
 import { Time, TimeMethods } from "~/OpeningHours/Time";
-import { toTimeRange } from "~/OpeningHours/nextOpen";
 
 export type TimeRange = {
   start: Time;
