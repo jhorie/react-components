@@ -90,7 +90,7 @@ export function currentOpenRange(openingHours: OpeningHours, date: Date): TimeRa
   return null;
 }
 
-export function nextOpen(openingHours: OpeningHours, at: Date | null = null): Date | null {
+export function nextOpen(openingHours: OpeningHours, at: Date | null = null, cap: Date | null = null): Date | null {
   at = at ?? new TZDate(new Date(), getTimezone(openingHours));
   at = new TZDate(at.getTime(), getTimezone(openingHours));
 
@@ -111,6 +111,10 @@ export function nextOpen(openingHours: OpeningHours, at: Date | null = null): Da
       return at;
     }
 
+    if (cap && at?.getTime() > cap.getTime()) {
+      return cap;
+    }
+
     openingHoursForDay = forDate(openingHours, at);
     nextOpen = OpeningHoursForDayMethods.nextOpen(openingHoursForDay, at);
   }
@@ -122,7 +126,7 @@ export function nextOpen(openingHours: OpeningHours, at: Date | null = null): Da
   return null;
 }
 
-export function nextClose(openingHours: OpeningHours, at: Date | null = null): Date | null {
+export function nextClose(openingHours: OpeningHours, at: Date | null = null, cap: Date | null = null): Date | null {
   at = at ?? new TZDate(new Date(), getTimezone(openingHours));
   at = new TZDate(at.getTime(), getTimezone(openingHours));
   const openRangeEnd = currentOpenRange(openingHours, at)?.end;
@@ -167,6 +171,11 @@ export function nextClose(openingHours: OpeningHours, at: Date | null = null): D
     if (isClosedAt(openingHours, at) && OpeningHoursForDayMethods.isOpenAtTheEndOfTheDay(openingHoursForDays)) {
       return at;
     }
+
+    if (cap && at?.getTime() > cap.getTime()) {
+      return cap;
+    }
+
     openingHoursForDays = forDate(openingHours, at);
 
     nextClose = OpeningHoursForDayMethods.nextClose(openingHoursForDays, at);
