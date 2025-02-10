@@ -3,7 +3,7 @@ import { Time } from "~/OpeningHours/Time";
 import { TimeRange } from "~/OpeningHours/TimeRange";
 
 export function getTimeRangeOfOpeningHoursForDay(openingHoursForDay: OpeningHoursForDay): TimeRange {
-  return toTimeRange(typeof openingHoursForDay == "string" ? openingHoursForDay : openingHoursForDay[0]);
+  return toTimeRange(typeof openingHoursForDay == "string" ? openingHoursForDay : openingHoursForDay.hours);
 }
 
 export function toTimeRange(timeRangeS: string): TimeRange {

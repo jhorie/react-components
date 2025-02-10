@@ -23,12 +23,15 @@ export type OpeningHoursExceptions<T = undefined> = { [date: TDate]: OpeningHour
 
 export type TimeRangeS = string;
 
-export type OpeningHoursForDay<T = undefined> = TimeRangeS | { 0: TimeRangeS; data: T };
+export type OpeningHoursForDay<T = undefined> = TimeRangeS | { hours: TimeRangeS; data: T };
 
 export function isOpenInOpeningHoursForDay(openingHoursForDay: OpeningHoursForDay[] | null, at: Date): boolean {
   return (
     openingHoursForDay?.some((openingHoursForDay) => {
-      return isOpenInTimeRange(at, typeof openingHoursForDay == "string" ? openingHoursForDay : openingHoursForDay[0]);
+      return isOpenInTimeRange(
+        at,
+        typeof openingHoursForDay == "string" ? openingHoursForDay : openingHoursForDay.hours
+      );
     }) ?? false
   );
 }
@@ -73,7 +76,7 @@ export function forDateTime(openingHours: OpeningHours, date: Date): OpeningHour
     [...openingHoursForDays].reverse()?.find((openingHoursForDay) => {
       return isOpenInTimeRange(
         date,
-        typeof openingHoursForDay == "string" ? openingHoursForDay : openingHoursForDay[0]
+        typeof openingHoursForDay == "string" ? openingHoursForDay : openingHoursForDay.hours
       );
     }) ?? null
   );

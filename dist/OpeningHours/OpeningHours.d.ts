@@ -14,7 +14,7 @@ export type OpeningHoursExceptions<T = undefined> = {
 };
 export type TimeRangeS = string;
 export type OpeningHoursForDay<T = undefined> = TimeRangeS | {
-    0: TimeRangeS;
+    hours: TimeRangeS;
     data: T;
 };
 export declare function isOpenInOpeningHoursForDay(openingHoursForDay: OpeningHoursForDay[] | null, at: Date): boolean;
