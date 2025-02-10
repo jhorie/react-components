@@ -56,4 +56,10 @@ function nextClose(openingHoursForDay: OpeningHoursForDay[], at: Date): Time | n
   return null;
 }
 
-export const OpeningHoursForDayMethods = { isOpenAtNight, nextClose, nextOpen, isOpenAtTheEndOfTheDay, isOpenAt };
+export const OpeningHoursForDayMethods = {
+  isOpenAtNight,
+  nextClose,
+  nextOpen: nextOpen,
+  isOpenAtTheEndOfTheDay,
+  isOpenAt,
+};
