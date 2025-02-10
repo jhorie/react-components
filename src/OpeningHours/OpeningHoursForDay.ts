@@ -27,8 +27,9 @@ function isOpenAtTheEndOfTheDay(openingHoursForDay: OpeningHoursForDay[]): boole
 }
 
 function nextOpen(openingHoursForDay: OpeningHoursForDay[], at: Date): Time | null {
-  for (const openingHoursForDay0 of openingHoursForDay) {
-    const timeRange = getTimeRangeOfOpeningHoursForDay(openingHoursForDay0);
+  for (const timeRange of openingHoursForDay
+    .map((openingHoursForDay0) => getTimeRangeOfOpeningHoursForDay(openingHoursForDay0))
+    .sort((a, b) => TimeMethods.timeToNumber(a.start) - TimeMethods.timeToNumber(b.start))) {
     const openTime = findOpenInFreeTime(TimeMethods.fromDate(at), timeRange);
     if (openTime) {
       return openTime;
@@ -38,16 +39,18 @@ function nextOpen(openingHoursForDay: OpeningHoursForDay[], at: Date): Time | nu
 }
 
 function nextClose(openingHoursForDay: OpeningHoursForDay[], at: Date): Time | null {
-  for (const openingHoursForDay0 of openingHoursForDay) {
-    const timeRange = getTimeRangeOfOpeningHoursForDay(openingHoursForDay0);
+  const timeRanges = openingHoursForDay
+    .map((openingHoursForDay0) => getTimeRangeOfOpeningHoursForDay(openingHoursForDay0))
+    .sort((a, b) => TimeMethods.timeToNumber(a.end) - TimeMethods.timeToNumber(b.end));
+
+  for (const timeRange of timeRanges) {
     const closeTime = findCloseInWorkingHours(TimeMethods.fromDate(at), timeRange);
 
     if (closeTime) {
       return closeTime;
     }
   }
-  for (const openingHoursForDay0 of openingHoursForDay) {
-    const timeRange = getTimeRangeOfOpeningHoursForDay(openingHoursForDay0);
+  for (const timeRange of timeRanges) {
     const closeTime = findCloseInFreeTime(TimeMethods.fromDate(at), timeRange);
     if (closeTime) {
       return closeTime;

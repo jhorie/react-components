@@ -198,3 +198,24 @@ test("nextClose", () => {
     new Date("2025-01-21T02:00:00Z").toUTCString()
   );
 });
+
+test("nextClose with weird order", () => {
+  const openingHours: OpeningHours = {
+    monday: ["10:00-12:55", "13:03-13:04", "12:59-13:00", "13:01-13:02"],
+    timezone: "Europe/Riga",
+  };
+
+  expect(nextClose(openingHours, new Date("2025-02-10T10:59:30Z"))?.toUTCString()).toBe(
+    new Date("2025-02-10T11:00:00Z").toUTCString()
+  );
+});
+test("nextOpen with weird order", () => {
+  const openingHours: OpeningHours = {
+    monday: ["10:00-12:55", "13:03-13:04", "12:59-13:00", "13:01-13:02"],
+    timezone: "Europe/Riga",
+  };
+
+  expect(nextOpen(openingHours, new Date("2025-02-10T10:59:30Z"))?.toUTCString()).toBe(
+    new Date("2025-02-10T11:01:00Z").toUTCString()
+  );
+});

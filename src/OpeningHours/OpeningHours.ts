@@ -5,6 +5,7 @@ import { Time, TimeMethods } from "~/OpeningHours/Time";
 import { OpeningHoursForDayMethods } from "~/OpeningHours/OpeningHoursForDay";
 import { isClosedAt, isOpenAt } from "~/OpeningHours/isOpenAt";
 import { TZDate } from "@date-fns/tz";
+import { clone } from "lodash";
 
 export type Day = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday";
 export type TDate = string;
@@ -37,9 +38,9 @@ export function isOpenInTimeRange(date: Date, timeRange: string): boolean {
   const [startHours, startMinutes] = startTime.split(":");
   const [endHours, endMinutes] = endTime.split(":");
 
-  let startDate = new Date(date.getTime());
+  let startDate = clone(date);
   startDate.setHours(Number(startHours), Number(startMinutes), 0, 0);
-  let endDate = new Date(date.getTime());
+  let endDate = clone(date);
   endDate.setHours(Number(endHours), Number(endMinutes), 0, 0);
 
   const endHoursPlusMinutes = 60 * Number(endHours) + Number(endMinutes);
@@ -69,7 +70,7 @@ export function forDateTime(openingHours: OpeningHours, date: Date): OpeningHour
     null;
 
   return (
-    openingHoursForDays.reverse()?.find((openingHoursForDay) => {
+    [...openingHoursForDays].reverse()?.find((openingHoursForDay) => {
       return isOpenInTimeRange(
         date,
         typeof openingHoursForDay == "string" ? openingHoursForDay : openingHoursForDay[0]
@@ -129,6 +130,7 @@ export function nextOpen(openingHours: OpeningHours, at: Date | null = null, cap
 export function nextClose(openingHours: OpeningHours, at: Date | null = null, cap: Date | null = null): Date | null {
   at = at ?? new TZDate(new Date(), getTimezone(openingHours));
   at = new TZDate(at.getTime(), getTimezone(openingHours));
+  // console.log("AT", at);
   const openRangeEnd = currentOpenRange(openingHours, at)?.end;
   if (openRangeEnd && openRangeEnd.hours < 24) {
     at.setHours(openRangeEnd.hours, openRangeEnd.minutes, 0, 0); // TODO CHECK
