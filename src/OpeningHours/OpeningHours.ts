@@ -73,7 +73,7 @@ export function forDateTime(openingHours: OpeningHours, date: Date): OpeningHour
     null;
 
   return (
-    [...openingHoursForDays].reverse()?.find((openingHoursForDay) => {
+    [...(openingHoursForDays ?? [])].reverse()?.find((openingHoursForDay) => {
       return isOpenInTimeRange(
         date,
         typeof openingHoursForDay == "string" ? openingHoursForDay : openingHoursForDay.hours

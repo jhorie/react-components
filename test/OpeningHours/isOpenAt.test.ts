@@ -219,3 +219,14 @@ test("nextOpen with weird order", () => {
     new Date("2025-02-10T11:01:00Z").toUTCString()
   );
 });
+
+test("nextClose with cap", () => {
+  const openingHours: OpeningHours = {
+    tuesday: ["11:00-15:00"],
+    timezone: "Europe/Riga",
+  };
+
+  expect(nextClose(openingHours, new Date("2025-02-20T12:00:00Z"))?.toUTCString()).toBe(
+    new Date("2025-02-25T13:00:00Z").toUTCString()
+  );
+});

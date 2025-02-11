@@ -908,7 +908,7 @@ function N(r, t) {
 }
 function kt(r, t) {
   var i, u, v;
-  return ((v = [...((i = r.exceptions) == null ? void 0 : i[j(t, "yyyy-MM-dd")]) ?? ((u = r.exceptions) == null ? void 0 : u[j(t, "MM-dd")]) ?? r[j(t, "EEEE").toLowerCase()] ?? null].reverse()) == null ? void 0 : v.find((a) => Ct(t, typeof a == "string" ? a : a.hours))) ?? null;
+  return ((v = [...((i = r.exceptions) == null ? void 0 : i[j(t, "yyyy-MM-dd")]) ?? ((u = r.exceptions) == null ? void 0 : u[j(t, "MM-dd")]) ?? r[j(t, "EEEE").toLowerCase()] ?? null ?? []].reverse()) == null ? void 0 : v.find((a) => Ct(t, typeof a == "string" ? a : a.hours))) ?? null;
 }
 function Y(r) {
   return r.timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
