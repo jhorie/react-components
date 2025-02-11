@@ -24,7 +24,7 @@ export const BlockUserInput = {
 //   View: ScrollShadows
 // }
 
-export { isOpen, isOpenAt, isClosed, isClosedAt } from "./OpeningHours/isOpenAt";
+export { isOpen, isOpenAt, isClosed, isClosedAt, isOpenComingDays } from "./OpeningHours/isOpenAt";
 export type {
   OpeningHours,
   OpeningHoursForDay,
